@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Product</title>
+    <link rel="stylesheet" href="./Sass/normalize.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./Sass/add.css">
+</head>
+<body>
+<header>
+    <h1 class="header">Add Product</h1>
+</header>
+<hr>
+<main>
+    <form action="addProduct.php" id="form">
+        <label for="sku">SKU</label><input class="inp" type="text" name="sku" id="sku"><br>
+        <label for="name">Name</label><input type="text" name="name" id="name"><br>
+        <label for="price">Price</label><input type="text" name="price" id="price"><br>
+
+        <label for="type">Type</label><select name="type" id="type" onchange="setFormType()">
+            <option value="none" selected>Select Type</option>
+            <option value="furniture">Furniture</option>
+            <option value="dvd">DVD</option>
+            <option value="book">Book</option>
+        </select>
+        <br>
+
+        <div id="multi"></div>
+    </form>
+</main>
+<script>
+    function setFurnitureForm() {
+        const div = document.getElementById('multi');
+
+        const heightLabel = document.createElement('label');
+        heightLabel.setAttribute('for', 'height');
+        heightLabel.textContent = 'Height';
+        const heightInput = document.createElement("input");
+        heightInput.setAttribute('type', 'text');
+        heightInput.setAttribute('name', 'height');
+        heightInput.setAttribute('id', 'height');
+
+        const widthLabel = document.createElement('label');
+        widthLabel.setAttribute('for', 'width');
+        widthLabel.textContent = 'Width';
+        const widthInput = document.createElement('input');
+        widthInput.setAttribute('type', 'text');
+        widthInput.setAttribute('name', 'Width');
+        widthInput.setAttribute('id', 'Width');
+
+        const lengthLabel = document.createElement('label');
+        lengthLabel.setAttribute('for', 'length');
+        lengthLabel.textContent = 'Length';
+        const lengthInput = document.createElement('input');
+        lengthInput.setAttribute('type', 'text');
+        lengthInput.setAttribute('name', 'length');
+        lengthInput.setAttribute('id', 'length');
+
+        div.appendChild(heightLabel);
+
+        div.appendChild(heightInput);
+        const br1 = document.createElement('br');
+        div.appendChild(br1);
+        div.appendChild(widthLabel);
+        div.appendChild(widthInput);
+        const br2 = document.createElement('br');
+        div.appendChild(br2);
+        div.appendChild(lengthLabel);
+        div.appendChild(lengthInput);
+    }
+
+    function clearForm() {
+        const div = document.getElementById('multi');
+
+        while (div.firstChild) {
+            div.removeChild(div.firstChild)
+        }
+    }
+
+    function setDvdForm() {
+
+    }
+
+    function setBookForm() {
+
+    }
+
+    function setFormType() {
+        clearForm();
+
+        const type = document.getElementById('type').value;
+
+        switch (type) {
+            case 'furniture':
+                setFurnitureForm();
+                break;
+            case 'dvd':
+                setDvdForm();
+                break;
+            case 'book':
+                setBookForm();
+                break;
+        }
+    }
+</script>
+</body>
+</html>

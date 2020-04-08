@@ -1,0 +1,31 @@
+h1.title {
+  font-size: 400%;
+  text-align: center;
+}
+
+h2.author {
+  margin-bottom: 0;
+  font-size: 200%;
+  text-align: center;
+}
+
+.btns {
+  text-align: center;
+}
+
+a {
+  color: aliceblue;
+  text-decoration: none;
+}
+
+.product_list_btn {
+  padding-top: 5%;
+  padding-bottom: 5%;
+  font-size: 160%;
+}
+
+.add_product_btn {
+  font-size: 160%;
+}
+
+/*# sourceMappingURL=index.css.map */
