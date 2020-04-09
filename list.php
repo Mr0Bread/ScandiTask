@@ -15,6 +15,7 @@
 <body>
 <header>
     <h1 class="title">ScandiTask</h1>
+    <div id="test"></div>
     <h1 class="header">Product List</h1>
 </header>
 <hr>
@@ -28,7 +29,10 @@
             </div>
             <div id="upperPagination" class="col-sm"></div>
             <div class="col-sm" style="text-align: right">
-                <button type="submit" class="btn btn-dark" id="massDeleteBtn">Mass Delete</button>
+                <form method="post" id="massDeleteForm">
+                    <button type="submit" class="btn btn-dark" id="massDeleteBtn">Mass Delete</button>
+                    <input type="hidden" name="idsToDelete" id="idsToDelete">
+                </form>
             </div>
         </div>
     </div>
@@ -52,7 +56,8 @@
                 echo "<div class=\"grid-item\">
                     <div style=\"text-align: left\">
                         <input class='form-check-input' 
-                               style='margin-left: 5px' type='checkbox' value='" . $row['id'] . "'> 
+                               style='margin-left: 5px' type='checkbox' value='" . $row['id'] . "' 
+                               onclick='passValueToForm(this.value)'> 
                     </div><br>
                     " . $row['sku'] . "<br>
                     " . $row['name'] . "<br>
@@ -63,7 +68,8 @@
                 echo "<div class=\"grid-item\">
                     <div style=\"text-align: left\">
                         <input class='form-check-input' 
-                               style='margin-left: 5px' type='checkbox' value='" . $row['id'] . "'> 
+                               style='margin-left: 5px' type='checkbox' value='" . $row['id'] . "'
+                               onclick='passValueToForm(this.value)'> 
                     </div><br>
                     " . $row['sku'] . "<br>
                     " . $row['name'] . "<br>
@@ -74,7 +80,8 @@
                 echo "<div class=\"grid-item\">
                     <div style=\"text-align: left\">
                         <input class='form-check-input' 
-                               style='margin-left: 5px' type='checkbox' value='" . $row['id'] . "'> 
+                               style='margin-left: 5px' type='checkbox' value='" . $row['id'] . "'
+                               onclick='passValueToForm(this.value)'> 
                     </div><br>
                     " . $row['sku'] . "<br>
                     " . $row['name'] . "<br>
@@ -139,4 +146,48 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
 </body>
+<script>
+    function passValueToForm(value) {
+        document.getElementById('idsToDelete').value += ',' + value;
+    }
+
+    $(document).ready(function () {
+        var request;
+
+        $('#massDeleteForm')submit(function (event) {
+            event.preventDefault();
+
+            if (request) {
+                request.abort();
+            }
+
+            var $form = $(this);
+            var $inputs = $form.find('input, select, button, textarea');
+            var serializedData = $form.serialize();
+            $inputs.prop('disabled', true);
+
+            request = $.ajax({
+                url: '/delete.php',
+                type: 'post',
+                data: serializedData
+            });
+
+            request.done(function (response) {
+                console.log("Hooray, it worked!");
+                console.log(response);
+            });
+
+            request.fail(function (textStatus, errorThrown) {
+                console.error(
+                    "The following error occurred: " +
+                    textStatus, errorThrown
+                );
+            });
+
+            request.always(function () {
+                $inputs.prop("disabled", false);
+            });
+        });
+    });
+</script>
 </html>
