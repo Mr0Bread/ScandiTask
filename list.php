@@ -14,17 +14,23 @@
 </head>
 <body>
 <header>
+    <h1 class="title">ScandiTask</h1>
     <h1 class="header">Product List</h1>
 </header>
 <hr>
 <main>
-    <div>
-        <div style="text-align: left">
-            <form action="/index.php" method="get">
-                <button type="submit" class="btn btn-dark">Back</button>
-            </form>
+    <div class="container">
+        <div class="row">
+            <div style="text-align: left" class="col-sm">
+                <form action="/index.php" method="get">
+                    <button type="submit" class="btn btn-dark">Back</button>
+                </form>
+            </div>
+            <div id="upperPagination" class="col-sm"></div>
+            <div class="col-sm" style="text-align: right">
+                <button type="submit" class="btn btn-dark" id="massDeleteBtn">Mass Delete</button>
+            </div>
         </div>
-        <div id="upperPagination"></div>
     </div>
     <div class="grid-container" id="container">
         <?php
@@ -32,7 +38,7 @@
 
         $page = isset($_GET['page']) ? $_GET['page'] : 1;
 
-        $no_of_records_per_page = 9;
+        $no_of_records_per_page = 12;
         $offset = ($page - 1) * $no_of_records_per_page;
 
         $db_client = new MySQLDataBase();
@@ -40,13 +46,43 @@
         $result = $db_client->getRows($no_of_records_per_page, $offset);
 
         while ($row = $result->fetch_assoc()) {
-            echo "<div class=\"grid-item\"> 
-                    SKU: " . $row['sku'] . "<br>
-                    Name: " . $row['name'] . "<br>
-                    Price: " . $row['price'] . "<br>
-                </div>";
-        }
+            $priceStr = number_format((float)$row['price'], 2, '.', '');
 
+            if ($row['category_id'] == '1') {
+                echo "<div class=\"grid-item\">
+                    <div style=\"text-align: left\">
+                        <input class='form-check-input' 
+                               style='margin-left: 5px' type='checkbox' value='" . $row['id'] . "'> 
+                    </div><br>
+                    " . $row['sku'] . "<br>
+                    " . $row['name'] . "<br>
+                    " . $priceStr . " $<br>
+                    Size: " . $row['size'] . " MB<br>
+                </div>";
+            } else if ($row['category_id'] == '2') {
+                echo "<div class=\"grid-item\">
+                    <div style=\"text-align: left\">
+                        <input class='form-check-input' 
+                               style='margin-left: 5px' type='checkbox' value='" . $row['id'] . "'> 
+                    </div><br>
+                    " . $row['sku'] . "<br>
+                    " . $row['name'] . "<br>
+                    " . $priceStr . " $<br>
+                    Weight: " . $row['weight'] . " KG<br>
+                </div>";
+            } else {
+                echo "<div class=\"grid-item\">
+                    <div style=\"text-align: left\">
+                        <input class='form-check-input' 
+                               style='margin-left: 5px' type='checkbox' value='" . $row['id'] . "'> 
+                    </div><br>
+                    " . $row['sku'] . "<br>
+                    " . $row['name'] . "<br>
+                    " . $priceStr . " $<br>
+                    Dimension: " . $row['height'] . "x" . $row['width'] . "x" . $row['length'] . " CM<br>
+                </div>";
+            }
+        }
         ?>
     </div>
     <div style="margin-top: 10px">
@@ -58,22 +94,30 @@
 
                 if ($page != 1) {
                     $previous = $page - 1;
-                    echo "<li class=\"page-item\"><a class=\"page-link\" href=\"http://localhost:8080/list.php?page=$previous\">Previous</a></li>";
+                    echo "<li class=\"page-item\"><a 
+                              style=\"background-color: #343434; color: aliceblue\" 
+                              class=\"page-link\" 
+                              href=\"http://localhost:8080/list.php?page=$previous\">Previous</a></li>";
                 }
 
                 for ($i = 1; $i <= $total_pages; $i++) {
                     if ($i == $page) {
                         echo "<li class=\"page-item active\">
-                          <a class=\"page-link\" href=\"http://localhost:8080/list.php?page=$i\">$i<span class=\"sr-only\">(current)</span></a>
+                          <a  style=\"background-color: #343434; color: aliceblue\" 
+                          class=\"page-link\" href=\"http://localhost:8080/list.php?page=$i\">
+                          $i<span class=\"sr-only\">(current)</span></a>
                           </li>";
                     } else {
-                        echo "<li class=\"page-item\"><a class=\"page-link\" href=\"http://localhost:8080/list.php?page=$i\">$i</a></li>";
+                        echo "<li class=\"page-item\">
+                                <a  style=\"background-color: #343434; color: aliceblue\" 
+                                class=\"page-link\" href=\"http://localhost:8080/list.php?page=$i\">$i</a></li>";
                     }
                 }
 
                 if ($page != $total_pages) {
                     $next = $page + 1;
-                    echo "<li class=\"page-item\"><a class=\"page-link\" href=\"http://localhost:8080/list.php?page=$next\">Next</a></li>";
+                    echo "<li class=\"page-item\"><a  style=\"background-color: #343434; color: aliceblue\" 
+                              class=\"page-link\" href=\"http://localhost:8080/list.php?page=$next\">Next</a></li>";
                 }
 
                 $db_client->close();

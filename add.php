@@ -13,6 +13,7 @@
 </head>
 <body>
 <header>
+    <h1 class="title">ScandiTask</h1>
     <h1 class="header">Add Product</h1>
 </header>
 <hr>

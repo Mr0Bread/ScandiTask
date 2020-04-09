@@ -173,6 +173,7 @@ class MySQLDataBase
             echo "first insert was sucessfull\n";
         } else {
             echo "first insert has been failed: " . $this->connection->error . "\n";
+            http_response_code(400);
             return;
         }
 
@@ -180,6 +181,7 @@ class MySQLDataBase
             echo "Commit was done successfully\n";
         } else {
             echo "Commit wasn't successfull: " . $this->connection->error . "\n";
+            http_response_code(400);
             return;
         }
 
@@ -190,6 +192,7 @@ class MySQLDataBase
             echo "Commit was done successfully\n";
         } else {
             echo "Commit wasn't successfull: " . $this->connection->error . "\n";
+            http_response_code(400);
             return;
         }
 
@@ -199,6 +202,7 @@ class MySQLDataBase
             echo "second insert was sucessfull\n";
         } else {
             echo "second insert has been failed: " . $this->connection->error . "\n";
+            http_response_code(400);
             return;
         }
 
@@ -206,76 +210,28 @@ class MySQLDataBase
             echo "Commit was done successfully\n";
         } else {
             echo "Commit wasn't successfull: " . $this->connection->error . "\n";
+            http_response_code(400);
         }
     }
 
-    public function getBookRows()
+    public function getRows($limit, $offset)
     {
-        $this->query = "SELECT products.name AS name, price, sku, categories.name AS category, weight FROM scanditask.products
-                        JOIN scanditask.books ON products.id = books.product_id
-                        JOIN scanditask.categories ON products.category = categories.id";
-
-        if ($result = $this->connection->query($this->query)) {
-        } else {
-            echo "select has been failed: " . $this->connection->error . "\n";
-            return null;
-        }
-
-        if ($this->connection->commit()) {
-            return $result;
-        } else {
-            echo "Commit wasn't successfull: " . $this->connection->error . "\n";
-            return null;
-        }
-    }
-
-    public function getDiscRows()
-    {
-        $this->query = "SELECT products.name AS name, price, sku, categories.name AS category, size FROM scanditask.products
-                        JOIN scanditask.discs ON products.id = discs.product_id
-                        JOIN scanditask.categories ON products.category = categories.id";
-
-        if ($result = $this->connection->query($this->query)) {
-        } else {
-            echo "select has been failed: " . $this->connection->error . "\n";
-            return null;
-        }
-
-        if ($this->connection->commit()) {
-            return $result;
-        } else {
-            echo "Commit wasn't successfull: " . $this->connection->error . "\n";
-            return null;
-        }
-    }
-
-    public function getFurnitureRows()
-    {
-        $this->query = "SELECT products.name AS name, price, sku, categories.name AS category, height, width, length FROM scanditask.products
-                        JOIN scanditask.categories ON products.category = categories.id
-                        JOIN scanditask.furniture ON products.id = furniture.product_id";
-
-        if ($result = $this->connection->query($this->query)) {
-        } else {
-            echo "select has been failed: " . $this->connection->error . "\n";
-            return null;
-        }
-
-        if ($this->connection->commit()) {
-            return $result;
-        } else {
-            echo "Commit wasn't successfull: " . $this->connection->error . "\n";
-            return null;
-        }
-    }
-
-    public function getRows($limit, $offset) {
-        $this->query = "SELECT products.id,products.name, price, sku, categories.id, size, height, width, length, weight FROM scanditask.products
-                        JOIN scanditask.categories ON products.category = categories.id
-                        LEFT JOIN scanditask.discs ON products.id = discs.product_id
-                        LEFT JOIN scanditask.furniture ON products.id = furniture.product_id
-                        LEFT JOIN scanditask.books ON products.id = books.product_id
-                        ORDER BY products.id
+        $this->query = "SELECT products.id,
+                       products.name,
+                       price,
+                       sku,
+                       categories.id as category_id,
+                       size,
+                       height,
+                       width,
+                       length,
+                       weight
+                FROM scanditask.products
+                         JOIN scanditask.categories ON products.category = categories.id
+                         LEFT JOIN scanditask.discs ON products.id = discs.product_id
+                         LEFT JOIN scanditask.furniture ON products.id = furniture.product_id
+                         LEFT JOIN scanditask.books ON products.id = books.product_id
+                ORDER BY products.id
                         LIMIT $limit
                         OFFSET $offset";
 
@@ -293,7 +249,8 @@ class MySQLDataBase
         }
     }
 
-    public function getRowCount() {
+    public function getRowCount()
+    {
         $this->query = "SELECT COUNT(*) FROM scanditask.products
                         JOIN scanditask.categories ON products.category = categories.id
                         LEFT JOIN scanditask.discs ON products.id = discs.product_id
