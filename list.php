@@ -29,10 +29,10 @@
             </div>
             <div id="upperPagination" class="col-sm"></div>
             <div class="col-sm" style="text-align: right">
-                <form method="post" id="massDeleteForm">
+                <form action="/delete.php" method="post" id="massDeleteForm">
                     <button type="submit" class="btn btn-dark" id="massDeleteBtn">Mass Delete</button>
-                    <input type="hidden" name="idsToDelete" id="idsToDelete">
                 </form>
+                <form action="/list.php"></form>
             </div>
         </div>
     </div>
@@ -57,7 +57,8 @@
                     <div style=\"text-align: left\">
                         <input class='form-check-input' 
                                style='margin-left: 5px' type='checkbox' value='" . $row['id'] . "' 
-                               onclick='passValueToForm(this.value)'> 
+                               id='input" . $row['id'] . "'
+                               onclick='passValueToForm(this.value, this.id)'> 
                     </div><br>
                     " . $row['sku'] . "<br>
                     " . $row['name'] . "<br>
@@ -69,7 +70,8 @@
                     <div style=\"text-align: left\">
                         <input class='form-check-input' 
                                style='margin-left: 5px' type='checkbox' value='" . $row['id'] . "'
-                               onclick='passValueToForm(this.value)'> 
+                               id='input" . $row['id'] . "'
+                               onclick='passValueToForm(this.value, this.id)'> 
                     </div><br>
                     " . $row['sku'] . "<br>
                     " . $row['name'] . "<br>
@@ -81,7 +83,8 @@
                     <div style=\"text-align: left\">
                         <input class='form-check-input' 
                                style='margin-left: 5px' type='checkbox' value='" . $row['id'] . "'
-                               onclick='passValueToForm(this.value)'> 
+                               id='input" . $row['id'] . "'
+                               onclick='passValueToForm(this.value, this.id)'> 
                     </div><br>
                     " . $row['sku'] . "<br>
                     " . $row['name'] . "<br>
@@ -147,47 +150,17 @@
         crossorigin="anonymous"></script>
 </body>
 <script>
-    function passValueToForm(value) {
-        document.getElementById('idsToDelete').value += ',' + value;
+    function passValueToForm(value, id) {
+        if (document.getElementById(id).checked === true) {
+            const input = document.createElement('input');
+            input.setAttribute('type', 'hidden');
+            input.setAttribute('name', 'id' + value);
+            input.setAttribute('id', 'id' + value);
+            input.setAttribute('value', value);
+            document.getElementById('massDeleteForm').appendChild(input);
+        } else {
+            document.getElementById('id' + value).remove();
+        }
     }
-
-    $(document).ready(function () {
-        var request;
-
-        $('#massDeleteForm')submit(function (event) {
-            event.preventDefault();
-
-            if (request) {
-                request.abort();
-            }
-
-            var $form = $(this);
-            var $inputs = $form.find('input, select, button, textarea');
-            var serializedData = $form.serialize();
-            $inputs.prop('disabled', true);
-
-            request = $.ajax({
-                url: '/delete.php',
-                type: 'post',
-                data: serializedData
-            });
-
-            request.done(function (response) {
-                console.log("Hooray, it worked!");
-                console.log(response);
-            });
-
-            request.fail(function (textStatus, errorThrown) {
-                console.error(
-                    "The following error occurred: " +
-                    textStatus, errorThrown
-                );
-            });
-
-            request.always(function () {
-                $inputs.prop("disabled", false);
-            });
-        });
-    });
 </script>
 </html>

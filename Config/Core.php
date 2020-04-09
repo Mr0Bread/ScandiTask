@@ -270,4 +270,8 @@ class MySQLDataBase
             return null;
         }
     }
+
+    public function deleteRows($ids) {
+
+    }
 }
