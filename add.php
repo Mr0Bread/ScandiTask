@@ -22,26 +22,30 @@
         <div class="row">
             <div class="col-sm">
                 <div class="form-group">
-                    <label for="sku">SKU</label><input style="background-color: #343434; color: aliceblue" class="form-control"
+                    <label for="sku">SKU</label><input style="background-color: #343434; color: aliceblue"
+                                                       class="form-control"
                                                        type="text" name="sku" id="sku" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="name">Name</label><input style="background-color: #343434; color: aliceblue" class="form-control"
+                    <label for="name">Name</label><input style="background-color: #343434; color: aliceblue"
+                                                         class="form-control"
                                                          type="text" name="name" id="name"
                                                          required>
                 </div>
 
                 <div class="form-group">
-                    <label for="price">Price</label><input style="background-color: #343434; color: aliceblue" class="form-control"
+                    <label for="price">Price</label><input style="background-color: #343434; color: aliceblue"
+                                                           class="form-control"
                                                            type="text" name="price" id="price"
                                                            required>
                 </div>
 
                 <div class="form-group">
-                    <label for="typeSelect">Type</label><select style="background-color: #343434; color: aliceblue" class="form-control" name="type" id="typeSelect"
+                    <label for="typeSelect">Type</label><select style="background-color: #343434; color: aliceblue"
+                                                                class="form-control" name="type" id="typeSelect"
                                                                 required
-                                                                oninput="clearForm(); setFormType()">
+                                                                oninput="setFormType()">
                         <option value="none" selected disabled>Select Type</option>
                         <option value="furniture">Furniture</option>
                         <option value="dvd">DVD</option>
@@ -64,144 +68,53 @@
     <form action="/index.php" method="get" id="backForm"></form>
 </main>
 <script>
+    const submitHolder = document.getElementById('submit-holder');
+    const submitBtn = "<button type=\"submit\" class=\"btn btn-dark\">Submit</button>";
+    const multiForm = document.getElementById('multi');
+
     function submitBack() {
         document.getElementById('backForm').submit();
     }
 
     function setFurnitureForm() {
-        const mainDiv = document.getElementById('multi');
+        multiForm.innerHTML = "<div class=\"form-group\">\n" +
+            "    <label for=\"height\">Height</label><input required type=\"text\" name=\"height\" id=\"height\" class=\"form-control\"\n" +
+            "                                             style=\"background-color: #343434; color: aliceblue\">\n" +
+            "</div>\n" +
+            "\n" +
+            "<div class=\"form-group\">\n" +
+            "    <label for=\"width\">Width</label><input required type=\"text\" name=\"width\" id=\"width\" class=\"form-control\"\n" +
+            "                                           style=\"background-color: #343434; color: aliceblue\">\n" +
+            "</div>\n" +
+            "\n" +
+            "<div class=\"form-group\">\n" +
+            "    <label for=\"length\">Length</label><input required type=\"text\" name=\"length\" id=\"length\" class=\"form-control\"\n" +
+            "                                             style=\"background-color: #343434; color: aliceblue\">\n" +
+            "    <p>Provide height, width and length of furniture in meters</p>\n" +
+            "</div>";
 
-        const heightDiv = document.createElement('div');
-        heightDiv.setAttribute('class', 'form-group');
-
-        const heightLabel = document.createElement('label');
-        heightLabel.setAttribute('for', 'height');
-        heightLabel.textContent = 'Height';
-        const heightInput = document.createElement("input");
-        heightInput.setAttribute('type', 'text');
-        heightInput.setAttribute('name', 'height');
-        heightInput.setAttribute('id', 'height');
-        heightInput.setAttribute('class', 'form-control');
-        heightInput.setAttribute('style', 'background-color: #343434; color: aliceblue');
-        heightInput.required = true;
-
-        heightDiv.appendChild(heightLabel);
-        heightDiv.appendChild(heightInput);
-
-        const widthDiv = document.createElement('div');
-        widthDiv.setAttribute('class', 'form-group');
-
-        const widthLabel = document.createElement('label');
-        widthLabel.setAttribute('for', 'width');
-        widthLabel.textContent = 'Width';
-        const widthInput = document.createElement('input');
-        widthInput.setAttribute('type', 'text');
-        widthInput.setAttribute('name', 'width');
-        widthInput.setAttribute('id', 'width');
-        widthInput.setAttribute('class', 'form-control');
-        widthInput.setAttribute('style', 'background-color: #343434; color: aliceblue');
-        widthInput.required = true;
-
-        widthDiv.appendChild(widthLabel);
-        widthDiv.appendChild(widthInput);
-
-        const lengthDiv = document.createElement('div');
-        lengthDiv.setAttribute('class', 'form-group');
-
-        const lengthLabel = document.createElement('label');
-        lengthLabel.setAttribute('for', 'length');
-        lengthLabel.textContent = 'Length';
-        const lengthInput = document.createElement('input');
-        lengthInput.setAttribute('type', 'text');
-        lengthInput.setAttribute('name', 'length');
-        lengthInput.setAttribute('id', 'length');
-        lengthInput.setAttribute('class', 'form-control');
-        lengthInput.setAttribute('style', 'background-color: #343434; color: aliceblue');
-        lengthInput.required = true;
-
-        lengthDiv.appendChild(lengthLabel);
-        lengthDiv.appendChild(lengthInput);
-
-        const submit = document.createElement('button');
-        submit.setAttribute('type', 'submit');
-        submit.setAttribute('class', 'btn btn-dark');
-        submit.innerHTML = 'Submit';
-        document.getElementById('submit-holder').appendChild(submit);
-
-        mainDiv.appendChild(heightDiv);
-        mainDiv.appendChild(widthDiv);
-        mainDiv.appendChild(lengthDiv);
-    }
-
-    function clearForm() {
-        const mainDiv = document.getElementById('multi');
-        const submitHolderDiv = document.getElementById('submit-holder');
-
-        while (submitHolderDiv.firstChild) {
-            submitHolderDiv.removeChild(submitHolderDiv.firstChild);
-        }
-
-        while (mainDiv.firstChild) {
-            mainDiv.removeChild(mainDiv.firstChild);
-        }
+        submitHolder.innerHTML = submitBtn;
     }
 
     function setDvdForm() {
-        const mainDiv = document.getElementById('multi');
+        multiForm.innerHTML = "<div class=\"form-group\">\n" +
+            "    <label for=\"size\">Size</label><input required type=\"text\" name=\"size\" id=\"size\" class=\"form-control\"\n" +
+            "                                             style=\"background-color: #343434; color: aliceblue\">\n" +
+            "    <p>Enter size of disc in MB</p>\n" +
+            "</div>";
 
-        const sizeDiv = document.createElement('div');
-        sizeDiv.setAttribute('class', 'form-group');
-
-        const sizeLabel = document.createElement('label');
-        sizeLabel.setAttribute('for', 'size');
-        sizeLabel.textContent = 'Size';
-        const sizeInput = document.createElement("input");
-        sizeInput.setAttribute('type', 'text');
-        sizeInput.setAttribute('name', 'size');
-        sizeInput.setAttribute('id', 'size');
-        sizeInput.setAttribute('class', 'form-control');
-        sizeInput.setAttribute('style', 'background-color: #343434; color: aliceblue');
-
-        sizeDiv.appendChild(sizeLabel);
-        sizeDiv.appendChild(sizeInput);
-
-        const submit = document.createElement('button');
-        submit.setAttribute('type', 'submit');
-        submit.setAttribute('class', 'btn btn-dark');
-        submit.innerHTML = 'Submit';
-
-        document.getElementById('submit-holder').appendChild(submit);
-
-        mainDiv.appendChild(sizeLabel);
-        mainDiv.appendChild(sizeInput);
+        submitHolder.innerHTML = submitBtn;
 
     }
 
     function setBookForm() {
-        const mainDiv = document.getElementById('multi');
+        multiForm.innerHTML = "<div class=\"form-group\">\n" +
+            "    <label for=\"weight\">Weight</label><input required type=\"text\" name=\"weight\" id=\"weight\" class=\"form-control\"\n" +
+            "                                             style=\"background-color: #343434; color: aliceblue\">\n" +
+            "    <p>Enter weight of book in KG</p>\n" +
+            "</div>";
 
-        const weightDiv = document.createElement('div');
-        weightDiv.setAttribute('class', 'form-group');
-
-        const weightLabel = document.createElement('label');
-        weightLabel.setAttribute('for', 'weight');
-        weightLabel.textContent = 'Weight';
-        const weightInput = document.createElement("input");
-        weightInput.setAttribute('type', 'text');
-        weightInput.setAttribute('name', 'weight');
-        weightInput.setAttribute('id', 'weight');
-        weightInput.setAttribute('class', 'form-control');
-        weightInput.setAttribute('style', 'background-color: #343434; color: aliceblue');
-
-        const submit = document.createElement('button');
-        submit.setAttribute('type', 'submit');
-        submit.setAttribute('class', 'btn btn-dark');
-        submit.innerHTML = 'Submit';
-
-        document.getElementById('submit-holder').appendChild(submit);
-
-        mainDiv.appendChild(weightLabel);
-        mainDiv.appendChild(weightInput);
+        submitHolder.innerHTML = submitBtn;
 
     }
 
