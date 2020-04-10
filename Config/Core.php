@@ -272,6 +272,21 @@ class MySQLDataBase
     }
 
     public function deleteRows($ids) {
+        $this->query = "DELETE FROM scanditask.products WHERE id IN $ids;";
 
+        if ($this->connection->query($this->query)) {
+            echo "delete operation was sucessfull\n";
+        } else {
+            echo "delete has been failed: " . $this->connection->error . "\n";
+            http_response_code(400);
+            return;
+        }
+
+        if ($this->connection->commit()) {
+            echo "Commit was done successfully\n";
+        } else {
+            echo "Commit wasn't successfull: " . $this->connection->error . "\n";
+            http_response_code(400);
+        }
     }
 }
