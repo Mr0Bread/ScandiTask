@@ -19,58 +19,9 @@ class MySQLDataBase
         $this->connection = new mysqli($this->host, $this->login, $this->password, $this->database);
     }
 
-    function checkConnection()
-    {
-        if ($this->connection->connect_error) {
-            die('Connection failed: ' . $this->connection->connect_error);
-        } else {
-            echo "Nice";
-        }
-    }
-
-    function createTable()
-    {
-        if ($this->connection->query('CREATE DATABASE scanditask') == TRUE) {
-            echo 'Success';
-        } else {
-            echo 'Suck' . $this->connection->error;
-        }
-
-        $this->connection->select_db($this->database);
-    }
-
     function close()
     {
         $this->connection->close();
-    }
-
-    function run($query)
-    {
-        $this->query = $query;
-        $this->result = mysqli_query($this->connection, $this->query);
-        $this->error = mysqli_error($this->connection);
-    }
-
-    function row()
-    {
-        $this->data = mysqli_fetch_assoc($this->result);
-    }
-
-    function fetch()
-    {
-        while ($this->data = mysqli_fetch_assoc($this->result)) {
-            $this->fetch = $this->data;
-            return $this->fetch;
-        }
-    }
-
-    function stop()
-    {
-        unset($this->data);
-        unset($this->result);
-        unset($this->fetch);
-        unset($this->error);
-        unset($this->query);
     }
 
     function addFurniture($sku, $name, $price, $width, $height, $length)
