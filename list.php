@@ -15,8 +15,18 @@
 <body>
 <header>
     <h1 class="title">ScandiTask</h1>
-    <div id="test"></div>
-    <h1 class="header">Product List</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <h1 class="header">Product List</h1>
+            </div>
+            <div class="col-sm" style="text-align: right">
+                <form action="/add.php" method="get">
+                    <button type="submit" class="btn btn-dark">Add Product</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </header>
 <hr>
 <main>
@@ -24,14 +34,15 @@
         <div class="row">
             <div style="text-align: left" class="col-sm">
                 <form action="/index.php" method="get">
-                    <button type="submit" class="btn btn-dark">Back</button>
+                    <button type="submit" class="btn btn-dark">Home</button>
                 </form>
             </div>
             <div id="upperPagination" class="col-sm"></div>
             <div class="col-sm" style="text-align: right">
                 <form action="/delete.php" method="post" id="massDeleteForm">
                     <button type="button" class="btn btn-dark" id="massDeleteBtn"
-                            onclick="compoundAllHiddenValuesIntoOne(); submitDelete();">Mass Delete</button>
+                            onclick="compoundAllHiddenValuesIntoOne(); submitDelete();">Mass Delete
+                    </button>
                 </form>
                 <form action="/list.php"></form>
             </div>
@@ -50,6 +61,8 @@
         $db_client->connect();
         $result = $db_client->getRows($no_of_records_per_page, $offset);
 
+        $result or die("No results");
+
         while ($row = $result->fetch_assoc()) {
             $priceStr = number_format((float)$row['price'], 2, '.', '');
 
@@ -60,11 +73,13 @@
                                style='margin-left: 5px' type='checkbox' value='" . $row['id'] . "' 
                                id='input" . $row['id'] . "'
                                onclick='passValueToForm(this.value, this.id)'> 
-                    </div><br>
-                    " . $row['sku'] . "<br>
-                    " . $row['name'] . "<br>
-                    " . $priceStr . " $<br>
-                    Size: " . $row['size'] . " MB<br>
+                    </div>
+                    <div>
+                    <p><em>" . $row['sku'] . "</em></p>
+                    <p>" . $row['name'] . "</p>
+                    <p>" . $priceStr . " $</p>
+                    <p>Size: " . $row['size'] . " MB</p>
+                    </div>
                 </div>";
             } else if ($row['category_id'] == '2') {
                 echo "<div class=\"grid-item\">
@@ -73,11 +88,13 @@
                                style='margin-left: 5px' type='checkbox' value='" . $row['id'] . "'
                                id='input" . $row['id'] . "'
                                onclick='passValueToForm(this.value, this.id)'> 
-                    </div><br>
-                    " . $row['sku'] . "<br>
-                    " . $row['name'] . "<br>
-                    " . $priceStr . " $<br>
-                    Weight: " . $row['weight'] . " KG<br>
+                    </div>
+                    <div>
+                    <p><em>" . $row['sku'] . "</em></p>
+                    <p>" . $row['name'] . "</p>
+                    <p>" . $priceStr . " $</p>
+                    <p>Weight: " . $row['weight'] . " KG</p>
+                    </div>
                 </div>";
             } else {
                 echo "<div class=\"grid-item\">
@@ -86,11 +103,13 @@
                                style='margin-left: 5px' type='checkbox' value='" . $row['id'] . "'
                                id='input" . $row['id'] . "'
                                onclick='passValueToForm(this.value, this.id)'> 
-                    </div><br>
-                    " . $row['sku'] . "<br>
-                    " . $row['name'] . "<br>
-                    " . $priceStr . " $<br>
-                    Dimension: " . $row['height'] . "x" . $row['width'] . "x" . $row['length'] . " CM<br>
+                    </div>
+                    <div>
+                    <p><em>" . $row['sku'] . "</em></p>
+                    <p>" . $row['name'] . "</p>
+                    <p>" . $priceStr . " $</p>
+                    <p>Dimension: " . $row['height'] . "x" . $row['width'] . "x" . $row['length'] . " CM</p>
+                    </div>
                 </div>";
             }
         }

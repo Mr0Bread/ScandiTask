@@ -14,7 +14,18 @@
 <body>
 <header>
     <h1 class="title">ScandiTask</h1>
-    <h1 class="header">Add Product</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <h1 class="header">Add Product</h1>
+            </div>
+            <div class="col-sm" style="text-align: right">
+                <form action="/list.php" method="get">
+                    <button type="submit" class="btn btn-dark">Product List</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </header>
 <hr>
 <main class="container">
@@ -31,13 +42,14 @@
                     <label for="name">Name</label><input style="background-color: #343434; color: aliceblue"
                                                          class="form-control"
                                                          type="text" name="name" id="name"
+                                                         minlength="3"
                                                          required>
                 </div>
 
                 <div class="form-group">
                     <label for="price">Price</label><input style="background-color: #343434; color: aliceblue"
                                                            class="form-control"
-                                                           type="text" name="price" id="price"
+                                                           type="number" step="0.01" min="0.01" name="price" id="price"
                                                            required>
                 </div>
 
@@ -58,13 +70,16 @@
         </div>
         <div class="row">
             <div class="col-sm">
-                <button type="submit" class="btn btn-dark" onclick="submitBack()">Back</button>
+                <button type="submit" class="btn btn-dark" onclick="submitBack()">Home</button>
             </div>
             <div class="col-sm" id="submit-holder">
 
             </div>
         </div>
     </form>
+    <div id="log" style="color: aliceblue">
+
+    </div>
     <form action="/index.php" method="get" id="backForm"></form>
 </main>
 <script>
@@ -78,19 +93,19 @@
 
     function setFurnitureForm() {
         multiForm.innerHTML = "<div class=\"form-group\">\n" +
-            "    <label for=\"height\">Height</label><input required type=\"text\" name=\"height\" id=\"height\" class=\"form-control\"\n" +
+            "    <label for=\"height\">Height</label><input required type=\"number\" min='0.01' step='0.01' name=\"height\" id=\"height\" class=\"form-control\"\n" +
             "                                             style=\"background-color: #343434; color: aliceblue\">\n" +
             "</div>\n" +
             "\n" +
             "<div class=\"form-group\">\n" +
-            "    <label for=\"width\">Width</label><input required type=\"text\" name=\"width\" id=\"width\" class=\"form-control\"\n" +
+            "    <label for=\"width\">Width</label><input required type=\"number\" min='0.01' step='0.01' name=\"width\" id=\"width\" class=\"form-control\"\n" +
             "                                           style=\"background-color: #343434; color: aliceblue\">\n" +
             "</div>\n" +
             "\n" +
             "<div class=\"form-group\">\n" +
-            "    <label for=\"length\">Length</label><input required type=\"text\" name=\"length\" id=\"length\" class=\"form-control\"\n" +
+            "    <label for=\"length\">Length</label><input required type=\"number\" min='0.01' step='0.01' name=\"length\" id=\"length\" class=\"form-control\"\n" +
             "                                             style=\"background-color: #343434; color: aliceblue\">\n" +
-            "    <p>Provide height, width and length of furniture in meters</p>\n" +
+            "    <p style='padding-top: 10px'>Provide height, width and length of furniture in meters</p>\n" +
             "</div>";
 
         submitHolder.innerHTML = submitBtn;
@@ -98,9 +113,9 @@
 
     function setDvdForm() {
         multiForm.innerHTML = "<div class=\"form-group\">\n" +
-            "    <label for=\"size\">Size</label><input required type=\"text\" name=\"size\" id=\"size\" class=\"form-control\"\n" +
+            "    <label for=\"size\">Size</label><input required type=\"number\" min='0.01' step='0.01'  name=\"size\" id=\"size\" class=\"form-control\"\n" +
             "                                             style=\"background-color: #343434; color: aliceblue\">\n" +
-            "    <p>Enter size of disc in MB</p>\n" +
+            "    <p style='padding-top: 10px'>Enter size of disc in MB</p>\n" +
             "</div>";
 
         submitHolder.innerHTML = submitBtn;
@@ -109,9 +124,9 @@
 
     function setBookForm() {
         multiForm.innerHTML = "<div class=\"form-group\">\n" +
-            "    <label for=\"weight\">Weight</label><input required type=\"text\" name=\"weight\" id=\"weight\" class=\"form-control\"\n" +
+            "    <label for=\"weight\">Weight</label><input required type=\"number\" min='0.01' step='0.01' name=\"weight\" id=\"weight\" class=\"form-control\"\n" +
             "                                             style=\"background-color: #343434; color: aliceblue\">\n" +
-            "    <p>Enter weight of book in KG</p>\n" +
+            "    <p style='padding-top: 10px'>Enter weight of book in KG</p>\n" +
             "</div>";
 
         submitHolder.innerHTML = submitBtn;
@@ -176,6 +191,7 @@
                 // Log a message to the console
                 console.log("Hooray, it worked!");
                 console.log(response);
+                document.getElementById('log').innerHTML = response;
             });
 
             // Callback handler that will be called on failure

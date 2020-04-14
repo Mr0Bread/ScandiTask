@@ -1,5 +1,5 @@
 .header {
-  text-align: center;
+  text-align: left;
 }
 
 .grid-container {
@@ -23,6 +23,10 @@
 #loader {
   display: block;
   margin: auto;
+}
+
+p {
+  margin-bottom: 2%;
 }
 
 /*# sourceMappingURL=list.css.map */
