@@ -57,7 +57,7 @@
                     <label for="typeSelect">Type</label><select style="background-color: #343434; color: aliceblue"
                                                                 class="form-control" name="type" id="typeSelect"
                                                                 required
-                                                                oninput="setFormType()">
+                                                                oninput="setFormType(this.value)">
                         <option value="none" selected disabled>Select Type</option>
                         <option value="furniture">Furniture</option>
                         <option value="dvd">DVD</option>
@@ -133,10 +133,9 @@
 
     }
 
-    function setFormType() {
-        const type = document.getElementById('typeSelect').value;
+    function setFormType(value) {
 
-        switch (type) {
+        switch (value) {
             case 'furniture':
                 setFurnitureForm();
                 break;
