@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./Sass/common.css">
     <link rel="stylesheet" href="./Sass/list.css">
@@ -66,8 +65,7 @@
         while ($row = $result->fetch_assoc()) {
             $priceStr = number_format((float)$row['price'], 2, '.', '');
 
-            if ($row['category_id'] == '1') {
-                echo "<div class=\"grid-item\">
+            echo "<div class=\"grid-item\">
                     <div style=\"text-align: left\">
                         <input class='form-check-input' 
                                style='margin-left: 5px' type='checkbox' value='" . $row['id'] . "' 
@@ -77,38 +75,18 @@
                     <div>
                     <p><em>" . $row['sku'] . "</em></p>
                     <p>" . $row['name'] . "</p>
-                    <p>" . $priceStr . " $</p>
-                    <p>Size: " . $row['size'] . " MB</p>
+                    <p>" . $priceStr . " $</p>";
+
+            if ($row['category_id'] == '1') {
+                echo "<p>Size: " . $row['size'] . " MB</p>
                     </div>
                 </div>";
             } else if ($row['category_id'] == '2') {
-                echo "<div class=\"grid-item\">
-                    <div style=\"text-align: left\">
-                        <input class='form-check-input' 
-                               style='margin-left: 5px' type='checkbox' value='" . $row['id'] . "'
-                               id='input" . $row['id'] . "'
-                               onclick='passValueToForm(this.value, this.id)'> 
-                    </div>
-                    <div>
-                    <p><em>" . $row['sku'] . "</em></p>
-                    <p>" . $row['name'] . "</p>
-                    <p>" . $priceStr . " $</p>
-                    <p>Weight: " . $row['weight'] . " KG</p>
+                echo "<p>Weight: " . $row['weight'] . " KG</p>
                     </div>
                 </div>";
             } else {
-                echo "<div class=\"grid-item\">
-                    <div style=\"text-align: left\">
-                        <input class='form-check-input' 
-                               style='margin-left: 5px' type='checkbox' value='" . $row['id'] . "'
-                               id='input" . $row['id'] . "'
-                               onclick='passValueToForm(this.value, this.id)'> 
-                    </div>
-                    <div>
-                    <p><em>" . $row['sku'] . "</em></p>
-                    <p>" . $row['name'] . "</p>
-                    <p>" . $priceStr . " $</p>
-                    <p>Dimension: " . $row['height'] . "x" . $row['width'] . "x" . $row['length'] . " CM</p>
+                echo  "<p>Dimension: " . $row['height'] . "x" . $row['width'] . "x" . $row['length'] . " M</p>
                     </div>
                 </div>";
             }
