@@ -1,11 +1,3 @@
-<?php session_start();
-define('INDEX', '');
-require "Config/Core.php";
-
-$db_client = new MySQLDataBase();
-$db_client->connect();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
