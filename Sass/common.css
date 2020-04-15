@@ -1,0 +1,23 @@
+body {
+  text-align: center;
+  width: 1000px;
+  margin: 0 auto;
+  font-family: "Roboto", sans-serif;
+  background-color: #242424;
+}
+
+header {
+  color: aliceblue;
+}
+
+h1.title {
+  font-size: 400%;
+  text-align: center;
+}
+
+hr {
+  border-radius: 5px;
+  border-top: 5px solid rgba(0, 0, 0, 0.1);
+}
+
+/*# sourceMappingURL=common.css.map */
