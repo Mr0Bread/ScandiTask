@@ -16,7 +16,7 @@
 </header>
 <body>
 
-<form action="/Web/add.php" method="get">
+<form action="/add.php" method="get">
     <button type="submit" class="btn btn-dark"
             style="color: aliceblue; margin-top: 10px; width: 25%; font-size: 20px">
         Add Product

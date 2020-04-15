@@ -20,7 +20,7 @@
                 <h1 class="header">Product List</h1>
             </div>
             <div class="col-sm" style="text-align: right">
-                <form action="/Web/add.php" method="get">
+                <form action="/add.php" method="get">
                     <button type="submit" class="btn btn-dark">Add Product</button>
                 </form>
             </div>
@@ -32,13 +32,13 @@
     <div class="container">
         <div class="row">
             <div style="text-align: left" class="col-sm">
-                <form action="/Web/index.php" method="get">
+                <form action="/index.php" method="get">
                     <button type="submit" class="btn btn-dark">Home</button>
                 </form>
             </div>
             <div id="upperPagination" class="col-sm"></div>
             <div class="col-sm" style="text-align: right">
-                <form action="/Web/delete.php" method="post" id="massDeleteForm">
+                <form action="/delete.php" method="post" id="massDeleteForm">
                     <button type="button" class="btn btn-dark" id="massDeleteBtn"
                             onclick="compoundAllHiddenValuesIntoOne(); submitDelete();">Mass Delete
                     </button>

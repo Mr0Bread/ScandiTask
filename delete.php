@@ -10,5 +10,5 @@ $db_client->deleteRows($ids);
 
 $db_client->close();
 
-header("Location: http://localhost:8080/Web/list.php");
+header("Location: http://localhost:8080/list.php");
 die();
