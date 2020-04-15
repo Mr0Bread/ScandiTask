@@ -1,5 +1,5 @@
 <?php
-require "PHP/Config/Core.php";
+require "Config/Core.php";
 require "Models/Furniture.php";
 
 $db_client = new MySQLDataBase();

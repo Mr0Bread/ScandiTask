@@ -19,7 +19,7 @@ $(document).ready(function () {
 
         var url = document.getElementById('typeSelect').value;
         request = $.ajax({
-            url: "/add_" + url + ".php",
+            url: "/Web/add_" + url + ".php",
             type: "post",
             data: serializedData
         });

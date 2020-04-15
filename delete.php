@@ -1,5 +1,5 @@
 <?php
-require "PHP/Config/Core.php";
+require "Config/Core.php";
 
 $ids = $_POST['idsToDelete'] ?? 'there,is,none';
 
@@ -10,5 +10,5 @@ $db_client->deleteRows($ids);
 
 $db_client->close();
 
-header("Location: http://localhost:8080/PHP/list.php");
+header("Location: http://localhost:8080/Web/list.php");
 die();
