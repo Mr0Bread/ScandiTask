@@ -1,14 +1,17 @@
 <?php
 
-require "Config/Core.php";
+require "PHP/Config/Core.php";
+require "Models/DVD.php";
 
 $db_client = new MySQLDataBase();
 $db_client->connect();
 
-$sku = isset($_POST['sku']) ? $_POST['sku'] : null;
-$name = isset($_POST['name']) ? $_POST['name'] : null;
-$price = isset($_POST['price']) ? $_POST['price'] : null;
-$size = isset($_POST['size']) ? $_POST['size'] : null;
+$sku = $_POST['sku'] ?? null;
+$name = $_POST['name'] ?? null;
+$price = $_POST['price'] ?? null;
+$size = $_POST['size'] ?? null;
 
-$db_client->addDvd($sku, $name, $price, $size);
+$dvd = new DVD($sku, $name, $price, $size);
+
+$db_client->addDvd($dvd);
 $db_client->close();

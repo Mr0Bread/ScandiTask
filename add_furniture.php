@@ -1,15 +1,18 @@
 <?php
-require "Config/Core.php";
+require "PHP/Config/Core.php";
+require "Models/Furniture.php";
 
 $db_client = new MySQLDataBase();
 $db_client->connect();
 
-$sku = isset($_POST['sku']) ? $_POST['sku'] : null;
-$name = isset($_POST['name']) ? $_POST['name'] : null;
-$price = isset($_POST['price']) ? $_POST['price'] : null;
-$length = isset($_POST['length']) ? $_POST['length'] : null;
-$width = isset($_POST['width']) ? $_POST['width'] : null;
-$height = isset($_POST['height']) ? $_POST['height'] : null;
+$sku = $_POST['sku'] ?? null;
+$name = $_POST['name'] ?? null;
+$price = $_POST['price'] ?? null;
+$length = $_POST['length'] ?? null;
+$width = $_POST['width'] ?? null;
+$height = $_POST['height'] ?? null;
 
-$db_client->addFurniture($sku, $name, $price, $width, $height, $length);
+$furniture = new Furniture($sku, $name, $price, $height, $width, $length);
+
+$db_client->addFurniture($furniture);
 $db_client->close();

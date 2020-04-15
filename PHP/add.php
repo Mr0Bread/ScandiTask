@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Product</title>
-    <link rel="stylesheet" href="./Sass/normalize.css">
+    <link rel="stylesheet" href="../Sass/normalize.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./Sass/common.css">
-    <link rel="stylesheet" href="./Sass/add.css">
+    <link rel="stylesheet" href="../Sass/common.css">
+    <link rel="stylesheet" href="../Sass/add.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
@@ -20,7 +20,7 @@
                 <h1 class="header">Add Product</h1>
             </div>
             <div class="col-sm" style="text-align: right">
-                <form action="/list.php" method="get">
+                <form action="/PHP/list.php" method="get">
                     <button type="submit" class="btn btn-dark">Product List</button>
                 </form>
             </div>
@@ -80,11 +80,11 @@
     <div id="log" style="color: aliceblue">
 
     </div>
-    <form action="/index.php" method="get" id="backForm"></form>
+    <form action="/PHP/index.php" method="get" id="backForm"></form>
 </main>
-<script src="Scripts/formTypeHandler.js">
+<script src="../Scripts/formTypeHandler.js">
 </script>
-<script src="Scripts/addRequestHandler.js">
+<script src="../Scripts/addRequestHandler.js">
 </script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"

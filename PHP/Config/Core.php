@@ -24,10 +24,10 @@ class MySQLDataBase
         $this->connection->close();
     }
 
-    function addFurniture($sku, $name, $price, $width, $height, $length)
+    function addFurniture($furniture)
     {
         $this->query = "INSERT INTO scanditask.products (name, price, sku, category)
-                        VALUES ('$name', $price, '$sku', 3);";
+                        VALUES ('$furniture->name', $furniture->price, '$furniture->sku', 3);";
 
         if ($this->connection->query($this->query) == false) {
             echo "first insert has been failed: " . $this->connection->error . "\n";
@@ -39,7 +39,7 @@ class MySQLDataBase
             return;
         }
 
-        $this->query = "SELECT id FROM scanditask.products WHERE sku = '$sku'";
+        $this->query = "SELECT id FROM scanditask.products WHERE sku = '$furniture->sku'";
         $id = $this->connection->query($this->query)->fetch_object()->id;
 
         if ($this->connection->commit()  == false) {
@@ -48,7 +48,7 @@ class MySQLDataBase
         }
 
         $this->query = "INSERT INTO scanditask.furniture (height, width, length, product_id)
-                        VALUES ($height, $width, $length, $id);";
+                        VALUES ($furniture->height, $furniture->width, $furniture->length, $id);";
 
         if ($this->connection->query($this->query)  == false) {
             echo "second insert has been failed: " . $this->connection->error . "\n";
@@ -60,10 +60,10 @@ class MySQLDataBase
         }
     }
 
-    public function addDvd($sku, $name, $price, $size)
+    public function addDvd($dvd)
     {
         $this->query = "INSERT INTO scanditask.products (name, price, sku, category)
-                        VALUES ('$name', $price, '$sku', 1);";
+                        VALUES ('$dvd->name', $dvd->price, '$dvd->sku', 1);";
 
         if ($this->connection->query($this->query)  == false) {
             echo "first insert has been failed: " . $this->connection->error . "\n";
@@ -75,7 +75,7 @@ class MySQLDataBase
             return;
         }
 
-        $this->query = "SELECT id FROM scanditask.products WHERE sku = '$sku'";
+        $this->query = "SELECT id FROM scanditask.products WHERE sku = '$dvd->sku'";
         $id = $this->connection->query($this->query)->fetch_object()->id;
 
         if ($this->connection->commit()  == false) {
@@ -83,7 +83,7 @@ class MySQLDataBase
             return;
         }
 
-        $this->query = "INSERT INTO scanditask.discs (size, product_id) VALUES ($size, $id);";
+        $this->query = "INSERT INTO scanditask.discs (size, product_id) VALUES ($dvd->size, $id);";
 
         if ($this->connection->query($this->query)  == false) {
             echo "second insert has been failed: " . $this->connection->error . "\n";
@@ -95,10 +95,10 @@ class MySQLDataBase
         }
     }
 
-    public function addBook($sku, $name, $price, $weight)
+    public function addBook($book)
     {
         $this->query = "INSERT INTO scanditask.products (name, price, sku, category)
-                        VALUES ('$name', $price, '$sku', 2);";
+                        VALUES ('$book->name', $book->price, '$book->sku', 2);";
 
         if ($this->connection->query($this->query)  == false) {
             echo "first insert has been failed: " . $this->connection->error . "\n";
@@ -112,7 +112,7 @@ class MySQLDataBase
             return;
         }
 
-        $this->query = "SELECT id FROM scanditask.products WHERE sku = '$sku'";
+        $this->query = "SELECT id FROM scanditask.products WHERE sku = '$book->sku'";
         $id = $this->connection->query($this->query)->fetch_object()->id;
 
         if ($this->connection->commit()  == false) {
@@ -121,7 +121,7 @@ class MySQLDataBase
             return;
         }
 
-        $this->query = "INSERT INTO scanditask.books (weight, product_id) VALUES ($weight, $id);";
+        $this->query = "INSERT INTO scanditask.books (weight, product_id) VALUES ($book->weight, $id);";
 
         if ($this->connection->query($this->query)  == false) {
             echo "second insert has been failed: " . $this->connection->error . "\n";

@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Product List</title>
-    <link rel="stylesheet" href="./Sass/normalize.css">
+    <link rel="stylesheet" href="../Sass/normalize.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="Sass/common.css">
-    <link rel="stylesheet" href="Sass/index.css">
+    <link rel="stylesheet" href="../Sass/common.css">
+    <link rel="stylesheet" href="../Sass/index.css">
 </head>
 <header>
     <h1 class="title">ScandiTask</h1>
@@ -16,7 +16,7 @@
 </header>
 <body>
 
-<form action="/add.php" method="get">
+<form action="/PHP/add.php" method="get">
     <button type="submit" class="btn btn-dark"
             style="color: aliceblue; margin-top: 10px; width: 25%; font-size: 20px">
         Add Product
@@ -25,7 +25,7 @@
 
 <br>
 
-<form action="/list.php" method="get">
+<form action="/PHP/list.php" method="get">
     <button type="submit" class="btn btn-dark" style="color: aliceblue; width: 25%; font-size: 20px">
         Product List
     </button>

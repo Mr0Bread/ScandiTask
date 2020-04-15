@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Product List</title>
-    <link rel="stylesheet" href="./Sass/normalize.css">
+    <link rel="stylesheet" href="../Sass/normalize.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./Sass/common.css">
-    <link rel="stylesheet" href="./Sass/list.css">
+    <link rel="stylesheet" href="../Sass/common.css">
+    <link rel="stylesheet" href="../Sass/list.css">
 </head>
 <body>
 <header>
@@ -20,7 +20,7 @@
                 <h1 class="header">Product List</h1>
             </div>
             <div class="col-sm" style="text-align: right">
-                <form action="/add.php" method="get">
+                <form action="/PHP/add.php" method="get">
                     <button type="submit" class="btn btn-dark">Add Product</button>
                 </form>
             </div>
@@ -32,7 +32,7 @@
     <div class="container">
         <div class="row">
             <div style="text-align: left" class="col-sm">
-                <form action="/index.php" method="get">
+                <form action="/PHP/index.php" method="get">
                     <button type="submit" class="btn btn-dark">Home</button>
                 </form>
             </div>
@@ -43,7 +43,7 @@
                             onclick="compoundAllHiddenValuesIntoOne(); submitDelete();">Mass Delete
                     </button>
                 </form>
-                <form action="/list.php"></form>
+                <form action="/PHP/list.php"></form>
             </div>
         </div>
     </div>
@@ -51,7 +51,7 @@
         <?php
         require "Config/Core.php";
 
-        $page = isset($_GET['page']) ? $_GET['page'] : 1;
+        $page = $_GET['page'] ?? 1;
 
         $no_of_records_per_page = 12;
         $offset = ($page - 1) * $no_of_records_per_page;
@@ -147,6 +147,6 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
 </body>
-<script src="Scripts/massDeleteHandler.js">
+<script src="../Scripts/massDeleteHandler.js">
 </script>
 </html>
