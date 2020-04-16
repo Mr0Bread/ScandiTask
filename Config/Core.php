@@ -27,7 +27,7 @@ class MySQLDataBase
     function addFurniture($furniture)
     {
         $this->query = "INSERT INTO scanditask.products (name, price, sku, category)
-                        VALUES ('$furniture->name', $furniture->price, '$furniture->sku', 3);";
+                        VALUES ('$furniture->getName()', $furniture->getPrice(), '$furniture->getSku()', 3);";
 
         if ($this->connection->query($this->query) == false) {
             echo "first insert has been failed: " . $this->connection->error . "\n";
@@ -39,7 +39,7 @@ class MySQLDataBase
             return;
         }
 
-        $this->query = "SELECT id FROM scanditask.products WHERE sku = '$furniture->sku'";
+        $this->query = "SELECT id FROM scanditask.products WHERE sku = '$furniture->getSku()'";
         $id = $this->connection->query($this->query)->fetch_object()->id;
 
         if ($this->connection->commit()  == false) {
@@ -48,7 +48,7 @@ class MySQLDataBase
         }
 
         $this->query = "INSERT INTO scanditask.furniture (height, width, length, product_id)
-                        VALUES ($furniture->height, $furniture->width, $furniture->length, $id);";
+                        VALUES ($furniture->getHeight(), $furniture->getWidth(), $furniture->getLength(), $id);";
 
         if ($this->connection->query($this->query)  == false) {
             echo "second insert has been failed: " . $this->connection->error . "\n";
@@ -63,7 +63,7 @@ class MySQLDataBase
     public function addDvd($dvd)
     {
         $this->query = "INSERT INTO scanditask.products (name, price, sku, category)
-                        VALUES ('$dvd->name', $dvd->price, '$dvd->sku', 1);";
+                        VALUES ('$dvd->getName()', $dvd->getPrice(), '$dvd->getSku()', 1);";
 
         if ($this->connection->query($this->query)  == false) {
             echo "first insert has been failed: " . $this->connection->error . "\n";
@@ -75,7 +75,7 @@ class MySQLDataBase
             return;
         }
 
-        $this->query = "SELECT id FROM scanditask.products WHERE sku = '$dvd->sku'";
+        $this->query = "SELECT id FROM scanditask.products WHERE sku = '$dvd->getSku()'";
         $id = $this->connection->query($this->query)->fetch_object()->id;
 
         if ($this->connection->commit()  == false) {
@@ -83,7 +83,7 @@ class MySQLDataBase
             return;
         }
 
-        $this->query = "INSERT INTO scanditask.discs (size, product_id) VALUES ($dvd->size, $id);";
+        $this->query = "INSERT INTO scanditask.discs (size, product_id) VALUES ($dvd->getSize(), $id);";
 
         if ($this->connection->query($this->query)  == false) {
             echo "second insert has been failed: " . $this->connection->error . "\n";
@@ -98,7 +98,7 @@ class MySQLDataBase
     public function addBook($book)
     {
         $this->query = "INSERT INTO scanditask.products (name, price, sku, category)
-                        VALUES ('$book->name', $book->price, '$book->sku', 2);";
+                        VALUES ('$book->getName()', $book->getPrice(), '$book->getSku()', 2);";
 
         if ($this->connection->query($this->query)  == false) {
             echo "first insert has been failed: " . $this->connection->error . "\n";
@@ -112,7 +112,7 @@ class MySQLDataBase
             return;
         }
 
-        $this->query = "SELECT id FROM scanditask.products WHERE sku = '$book->sku'";
+        $this->query = "SELECT id FROM scanditask.products WHERE sku = '$book->getSku()'";
         $id = $this->connection->query($this->query)->fetch_object()->id;
 
         if ($this->connection->commit()  == false) {
@@ -121,7 +121,7 @@ class MySQLDataBase
             return;
         }
 
-        $this->query = "INSERT INTO scanditask.books (weight, product_id) VALUES ($book->weight, $id);";
+        $this->query = "INSERT INTO scanditask.books (weight, product_id) VALUES ($book->getWeight(), $id);";
 
         if ($this->connection->query($this->query)  == false) {
             echo "second insert has been failed: " . $this->connection->error . "\n";
