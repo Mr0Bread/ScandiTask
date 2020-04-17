@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Product List</title>
-    <link rel="stylesheet" href="Sass/normalize.css">
+    <link rel="stylesheet" href="../Sass/normalize.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="Sass/common.css">
-    <link rel="stylesheet" href="Sass/list.css">
+    <link rel="stylesheet" href="../Sass/common.css">
+    <link rel="stylesheet" href="../Sass/list.css">
 </head>
 <body>
 <header>
@@ -20,7 +20,7 @@
                 <h1 class="header">Product List</h1>
             </div>
             <div class="col-sm" style="text-align: right">
-                <form action="/add.php" method="get">
+                <form action="/Views/add.php" method="get">
                     <button type="submit" class="btn btn-dark">Add Product</button>
                 </form>
             </div>
@@ -32,24 +32,24 @@
     <div class="container">
         <div class="row">
             <div style="text-align: left" class="col-sm">
-                <form action="/index.php" method="get">
+                <form action="/Views/index.php" method="get">
                     <button type="submit" class="btn btn-dark">Home</button>
                 </form>
             </div>
             <div id="upperPagination" class="col-sm"></div>
             <div class="col-sm" style="text-align: right">
-                <form action="/delete.php" method="post" id="massDeleteForm">
+                <form action="/Controllers/delete.php" method="post" id="massDeleteForm">
                     <button type="button" class="btn btn-dark" id="massDeleteBtn"
                             onclick="compoundAllHiddenValuesIntoOne(); submitDelete();">Mass Delete
                     </button>
                 </form>
-                <form action="/list.php"></form>
+                <form action="/Views/list.php"></form>
             </div>
         </div>
     </div>
     <div class="grid-container" id="container">
         <?php
-        require "Config/Core.php";
+        require_once "../Config/Core.php";
 
         $page = $_GET['page'] ?? 1;
 
@@ -105,27 +105,27 @@
                     echo "<li class=\"page-item\"><a 
                               style=\"background-color: #343434; color: aliceblue\" 
                               class=\"page-link\" 
-                              href=\"http://localhost:8080/list.php?page=$previous\">Previous</a></li>";
+                              href=\"http://localhost:8080/Views/list.php?page=$previous\">Previous</a></li>";
                 }
 
                 for ($i = 1; $i <= $total_pages; $i++) {
                     if ($i == $page) {
                         echo "<li class=\"page-item active\">
                           <a  style=\"background-color: #343434; color: aliceblue\" 
-                          class=\"page-link\" href=\"http://localhost:8080/list.php?page=$i\">
+                          class=\"page-link\" href=\"http://localhost:8080/Views/list.php?page=$i\">
                           $i<span class=\"sr-only\">(current)</span></a>
                           </li>";
                     } else {
                         echo "<li class=\"page-item\">
                                 <a  style=\"background-color: #343434; color: aliceblue\" 
-                                class=\"page-link\" href=\"http://localhost:8080/list.php?page=$i\">$i</a></li>";
+                                class=\"page-link\" href=\"http://localhost:8080/Views/list.php?page=$i\">$i</a></li>";
                     }
                 }
 
                 if ($page != $total_pages) {
                     $next = $page + 1;
                     echo "<li class=\"page-item\"><a  style=\"background-color: #343434; color: aliceblue\" 
-                              class=\"page-link\" href=\"http://localhost:8080/list.php?page=$next\">Next</a></li>";
+                              class=\"page-link\" href=\"http://localhost:8080/Views/list.php?page=$next\">Next</a></li>";
                 }
 
                 $db_client->close();
@@ -147,6 +147,6 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
 </body>
-<script src="Scripts/massDeleteHandler.js">
+<script src="../Scripts/massDeleteHandler.js">
 </script>
 </html>

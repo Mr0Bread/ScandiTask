@@ -1,5 +1,5 @@
 <?php
-require "Product.php";
+require_once "Product.php";
 
 class DVD extends Product
 {
@@ -69,18 +69,16 @@ class DVD extends Product
         $this->price = $price;
     }
 
-    /**
-     * DVD constructor.
-     * @param $size
-     * @param $sku
-     * @param $name
-     * @param $price
-     */
-    public function __construct($sku, $name, $price, $size)
+    public function __construct()
     {
-        parent::__construct($sku, $name, $price);
-        $this->size = $size;
+        parent::__construct();
+        $this->size = $_POST['size'] ?? null;
     }
 
-
+    public function addToDatabase()
+    {
+        $dvd = new DVD();
+        $this->db_client->addDvd($dvd);
+        $this->db_client->close();
+    }
 }

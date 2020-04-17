@@ -1,5 +1,5 @@
 <?php
-require "Product.php";
+require_once "Product.php";
 
 class Book extends Product
 {
@@ -69,18 +69,16 @@ class Book extends Product
         $this->price = $price;
     }
 
-    /**
-     * Book constructor.
-     * @param $weight
-     * @param $sku
-     * @param $name
-     * @param $price
-     */
-    public function __construct($sku, $name, $price ,$weight)
+    public function __construct()
     {
-        parent::__construct($sku, $name, $price);
-        $this->weight = $weight;
+        parent::__construct();
+        $this->weight = $_POST['weight'] ?? null;
     }
 
-
+    public function addToDatabase()
+    {
+        $book = new Book();
+        $this->db_client->addBook($book);
+        $this->db_client->close();
+    }
 }

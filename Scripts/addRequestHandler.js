@@ -17,9 +17,8 @@ $(document).ready(function () {
 
         $inputs.prop("disabled", true);
 
-        var url = document.getElementById('typeSelect').value;
         request = $.ajax({
-            url: "/add_" + url + ".php",
+            url: "./Controllers/addProduct.php",
             type: "post",
             data: serializedData
         });

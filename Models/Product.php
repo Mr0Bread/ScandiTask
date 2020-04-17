@@ -1,11 +1,12 @@
 <?php
-
+require_once 'Config/Core.php';
 
 abstract class Product
 {
     protected $sku;
     protected $name;
     protected $price;
+    protected $db_client;
 
     /**
      * @return mixed
@@ -55,18 +56,12 @@ abstract class Product
         $this->price = $price;
     }
 
-    /**
-     * Product constructor.
-     * @param $sku
-     * @param $name
-     * @param $price
-     */
-    public function __construct($sku, $name, $price)
+    public function __construct()
     {
-        $this->sku = $sku;
-        $this->name = $name;
-        $this->price = $price;
+        $this->sku = $_POST['sku'] ?? null;
+        $this->name = $_POST['name'] ?? null;
+        $this->price = $_POST['price'] ?? null;
+        $this->db_client = new MySQLDataBase();
+        $this->db_client->connect();
     }
-
-
 }

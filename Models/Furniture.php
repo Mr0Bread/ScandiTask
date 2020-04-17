@@ -1,5 +1,5 @@
 <?php
-require "Product.php";
+require_once "Product.php";
 
 class Furniture extends Product
 {
@@ -103,22 +103,18 @@ class Furniture extends Product
         $this->price = $price;
     }
 
-    /**
-     * Furniture constructor.
-     * @param $height
-     * @param $width
-     * @param $length
-     * @param $sku
-     * @param $name
-     * @param $price
-     */
-    public function __construct($sku, $name, $price, $height, $width, $length)
+    public function __construct()
     {
-        parent::__construct($sku, $name, $price);
-        $this->height = $height;
-        $this->width = $width;
-        $this->length = $length;
+        parent::__construct();
+        $this->height = $_POST['height'] ?? null;
+        $this->width = $_POST['width'] ?? null;
+        $this->length = $_POST['length'] ?? null;
     }
 
-
+    public function addToDatabase()
+    {
+        $furniture = new Furniture();
+        $this->db_client->addFurniture($furniture);
+        $this->db_client->close();
+    }
 }
