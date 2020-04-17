@@ -69,16 +69,26 @@ class Book extends Product
         $this->price = $price;
     }
 
-    public function __construct()
+    public static function getInstanceToAddToDatabase()
     {
-        parent::__construct();
-        $this->weight = $_POST['weight'] ?? null;
+        $book = new self();
+        $book->prepareBasicParamsToAddToDatabase();
+        $book->setWeight($_POST['weight'] ?? null);
+        return $book;
     }
 
     public function addToDatabase()
     {
-        $book = new Book();
+        $this->connectToDatabase();
+        $book = Book::getInstanceToAddToDatabase();
         $this->db_client->addBook($book);
         $this->db_client->close();
+    }
+
+    public function echoAdditionalProperties($row)
+    {
+        echo "<p>Weight: " . $row['weight'] . " KG</p>
+                    </div>
+                </div>";
     }
 }

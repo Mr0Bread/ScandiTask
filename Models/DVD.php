@@ -69,16 +69,26 @@ class DVD extends Product
         $this->price = $price;
     }
 
-    public function __construct()
+    public static function getInstanceToAddToDatabase()
     {
-        parent::__construct();
-        $this->size = $_POST['size'] ?? null;
+        $DVD = new self();
+        $DVD->prepareBasicParamsToAddToDatabase();
+        $DVD->setSize($_POST['size'] ?? null);
+        return $DVD;
     }
 
     public function addToDatabase()
     {
-        $dvd = new DVD();
+        $this->connectToDatabase();
+        $dvd = DVD::getInstanceToAddToDatabase();
         $this->db_client->addDvd($dvd);
         $this->db_client->close();
+    }
+
+    public function echoAdditionalProperties($row)
+    {
+        echo "<p>Size: " . $row['size'] . " MB</p>
+                    </div>
+                </div>";
     }
 }

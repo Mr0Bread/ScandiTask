@@ -20,7 +20,7 @@ function setFurnitureForm() {
         "<div class=\"form-group\">\n" +
         "    <label for=\"length\">Length</label><input required type=\"number\" min='0.01' step='0.01' name=\"length\" id=\"length\" class=\"form-control\"\n" +
         "                                             style=\"background-color: #343434; color: aliceblue\">\n" +
-        "    <p style='padding-top: 10px'>Provide height, width and length of furniture in meters</p><input type='hidden' name='type' value='furniture'>\n" +
+        "    <p style='padding-top: 10px'>Provide height, width and length of furniture in meters</p><input type='hidden' name='type' value='Furniture'>\n" +
         "</div>";
 
     submitHolder.innerHTML = submitBtn;
@@ -41,7 +41,7 @@ function setBookForm() {
     multiForm.innerHTML = "<div class=\"form-group\">\n" +
         "    <label for=\"weight\">Weight</label><input required type=\"number\" min='0.01' step='0.01' name=\"weight\" id=\"weight\" class=\"form-control\"\n" +
         "                                             style=\"background-color: #343434; color: aliceblue\">\n" +
-        "    <p style='padding-top: 10px'>Enter weight of book in KG</p>\n<input type='hidden' name='type' value='book'>" +
+        "    <p style='padding-top: 10px'>Enter weight of book in KG</p>\n<input type='hidden' name='type' value='Book'>" +
         "</div>";
 
     submitHolder.innerHTML = submitBtn;

@@ -112,6 +112,7 @@ class MySQLDataBase
     public function getRows($limit, $offset)
     {
         $this->query = "SELECT products.id,
+                       categories.name as category,
                        products.name,
                        price,
                        sku,

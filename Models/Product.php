@@ -1,5 +1,5 @@
 <?php
-require_once 'Config/Core.php';
+require_once '../Config/Core.php';
 
 abstract class Product
 {
@@ -56,11 +56,15 @@ abstract class Product
         $this->price = $price;
     }
 
-    public function __construct()
+    protected function prepareBasicParamsToAddToDatabase()
     {
         $this->sku = $_POST['sku'] ?? null;
         $this->name = $_POST['name'] ?? null;
         $this->price = $_POST['price'] ?? null;
+    }
+
+    public function connectToDatabase()
+    {
         $this->db_client = new MySQLDataBase();
         $this->db_client->connect();
     }

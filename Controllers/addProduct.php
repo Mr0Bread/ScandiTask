@@ -1,8 +1,6 @@
 <?php
 
-require_once 'Models/Book.php';
-require_once 'Models/Furniture.php';
-require_once 'Models/DVD.php';
+require_once '../Models/Models.php';
 
 $type = $_POST['type'] ?? null;
 

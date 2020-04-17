@@ -49,7 +49,7 @@
     </div>
     <div class="grid-container" id="container">
         <?php
-        require_once "../Config/Core.php";
+        require_once "../Models/Models.php";
 
         $page = $_GET['page'] ?? 1;
 
@@ -64,6 +64,8 @@
 
         while ($row = $result->fetch_assoc()) {
             $priceStr = number_format((float)$row['price'], 2, '.', '');
+            $type = $row['category'];
+            $product = new $type();
 
             echo "<div class=\"grid-item\">
                     <div style=\"text-align: left\">
@@ -77,19 +79,7 @@
                     <p>" . $row['name'] . "</p>
                     <p>" . $priceStr . " $</p>";
 
-            if ($row['category_id'] == '1') {
-                echo "<p>Size: " . $row['size'] . " MB</p>
-                    </div>
-                </div>";
-            } else if ($row['category_id'] == '2') {
-                echo "<p>Weight: " . $row['weight'] . " KG</p>
-                    </div>
-                </div>";
-            } else {
-                echo  "<p>Dimension: " . $row['height'] . "x" . $row['width'] . "x" . $row['length'] . " M</p>
-                    </div>
-                </div>";
-            }
+            $product->echoAdditionalProperties($row);
         }
         ?>
     </div>
