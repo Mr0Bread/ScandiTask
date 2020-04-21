@@ -6,7 +6,7 @@ abstract class Product
     protected $sku;
     protected $name;
     protected $price;
-    protected $db_client;
+    private static $db_client;
 
     /**
      * @return mixed
@@ -63,9 +63,16 @@ abstract class Product
         $this->price = $_POST['price'] ?? null;
     }
 
-    public function connectToDatabase()
+    public static function addProductToDatabase($product)
     {
-        $this->db_client = new MySQLDataBase();
-        $this->db_client->connect();
+        self::connectToDatabase();
+        self::$db_client->addProduct($product);
+        self::$db_client->close();
+    }
+
+    private static function connectToDatabase()
+    {
+        self::$db_client = new MySQLDataBase();
+        self::$db_client->connect();
     }
 }

@@ -69,20 +69,10 @@ class Book extends Product
         $this->price = $price;
     }
 
-    public static function getInstanceToAddToDatabase()
+    public function prepareInstanceToAddToDatabase()
     {
-        $book = new self();
-        $book->prepareBasicParamsToAddToDatabase();
-        $book->setWeight($_POST['weight'] ?? null);
-        return $book;
-    }
-
-    public function addToDatabase()
-    {
-        $this->connectToDatabase();
-        $book = Book::getInstanceToAddToDatabase();
-        $this->db_client->addBook($book);
-        $this->db_client->close();
+        $this->prepareBasicParamsToAddToDatabase();
+        $this->setWeight($_POST['weight'] ?? null);
     }
 
     public function echoAdditionalProperties($row)

@@ -14,17 +14,17 @@ class MySQLDataBase
     var $data;
     var $fetch;
 
-    function connect()
+    public function connect()
     {
         $this->connection = new mysqli($this->host, $this->login, $this->password, $this->database);
     }
 
-    function close()
+    public function close()
     {
         $this->connection->close();
     }
 
-    public function runNoReturnQuery()
+    private function runNoReturnQuery()
     {
         if ($this->connection->query($this->query) == false) {
             echo "error occurred: " . $this->connection->error . "\n";
@@ -32,12 +32,12 @@ class MySQLDataBase
         }
     }
 
-    public function runReturnQuery()
+    private function runReturnQuery()
     {
         return $this->connection->query($this->query)->fetch_object()->id;
     }
 
-    public function commit()
+    private function commit()
     {
         if ($this->connection->commit() == false) {
             echo "Commit wasn't successfull: " . $this->connection->error . "\n";
@@ -45,68 +45,50 @@ class MySQLDataBase
         }
     }
 
-    function addFurniture(Furniture $furniture)
+    private function fulfillNoReturnQuery($query)
     {
-        $this->query = "INSERT INTO scanditask.products (name, price, sku, category)
-                        VALUES ('" . $furniture->getName() . "', " . $furniture->getPrice() . ", '" . $furniture->getSku() . "', 3);";
-
+        $this->query = $query;
         $this->runNoReturnQuery();
-
-        $this->commit();
-
-        $this->query = "SELECT id FROM scanditask.products WHERE sku = '" . $furniture->getSku() . "'";
-        $id = $this->runReturnQuery();
-
-        $this->commit();
-
-        $this->query = "INSERT INTO scanditask.furniture (height, width, length, product_id)
-                        VALUES (" . $furniture->getHeight() . ", " . $furniture->getWidth() . ", " . $furniture->getLength() . ", $id);";
-
-        $this->runNoReturnQuery();
-
         $this->commit();
     }
 
-    public function addDvd(DVD $dvd)
+    private function fulfillReturnQuery($query)
     {
-        $this->query = "INSERT INTO scanditask.products (name, price, sku, category)
-                        VALUES ('" . $dvd->getName() . "', " . $dvd->getPrice() . ", '" . $dvd->getSku() . "', 1);";
-
-        $this->runNoReturnQuery();
-
+        $this->query = $query;
+        $result = $this->runReturnQuery();
         $this->commit();
-
-        $this->query = "SELECT id FROM scanditask.products WHERE sku = '" . $dvd->getSku() . "'";
-        $id = $this->runReturnQuery();
-
-        $this->commit();
-
-        $this->query = "INSERT INTO scanditask.discs (size, product_id) VALUES (" . $dvd->getSize() . ", $id);";
-
-        $this->runNoReturnQuery();
-
-        $this->commit();
+        return $result;
     }
 
-    public function addBook(Book $book)
+    private function addFurniture(Furniture $furniture)
     {
-        $this->query = "INSERT INTO scanditask.products (name, price, sku, category)
-                        VALUES ('" . $book->getName() . "', " . $book->getPrice() . ", '" . $book->getSku() . "', 2);";
+        $this->fulfillNoReturnQuery("INSERT INTO scanditask.products (name, price, sku, category)
+                        VALUES ('" . $furniture->getName() . "', " . $furniture->getPrice() . ", '" . $furniture->getSku() . "', 3);");
 
-        $this->runNoReturnQuery();
+        $id = $this->fulfillReturnQuery("SELECT id FROM scanditask.products WHERE sku = '" . $furniture->getSku() . "'");
 
-        $this->commit();
+        $this->fulfillNoReturnQuery("INSERT INTO scanditask.furniture (height, width, length, product_id)
+                        VALUES (" . $furniture->getHeight() . ", " . $furniture->getWidth() . ", " . $furniture->getLength() . ", $id);");
+    }
 
-        $this->query = "SELECT id FROM scanditask.products WHERE sku = '" . $book->getSku() . "'";
-        $id = $this->runReturnQuery();
+    private function addDvd(DVD $dvd)
+    {
+        $this->fulfillNoReturnQuery("INSERT INTO scanditask.products (name, price, sku, category)
+                        VALUES ('" . $dvd->getName() . "', " . $dvd->getPrice() . ", '" . $dvd->getSku() . "', 1);");
 
-        $this->commit();
+        $id = $this->fulfillReturnQuery("SELECT id FROM scanditask.products WHERE sku = '" . $dvd->getSku() . "'");
 
-        $this->query = "INSERT INTO scanditask.books (weight, product_id) VALUES (" . $book->getWeight() . ", $id);";
+        $this->fulfillNoReturnQuery("INSERT INTO scanditask.discs (size, product_id) VALUES (" . $dvd->getSize() . ", $id);");
+    }
 
-        $this->runNoReturnQuery();
+    private function addBook(Book $book)
+    {
+        $this->fulfillNoReturnQuery("INSERT INTO scanditask.products (name, price, sku, category)
+                        VALUES ('" . $book->getName() . "', " . $book->getPrice() . ", '" . $book->getSku() . "', 2);");
 
-        $this->commit();
+        $id = $this->fulfillReturnQuery("SELECT id FROM scanditask.products WHERE sku = '" . $book->getSku() . "'");
+
+        $this->fulfillNoReturnQuery("INSERT INTO scanditask.books (weight, product_id) VALUES (" . $book->getWeight() . ", $id);");
     }
 
     public function getRows($limit, $offset)
@@ -170,5 +152,16 @@ class MySQLDataBase
         $this->runNoReturnQuery();
 
         $this->commit();
+    }
+
+    public function addProduct($product)
+    {
+        if ($product instanceof Book) {
+            $this->addBook($product);
+        } else if ($product instanceof DVD) {
+            $this->addDvd($product);
+        } else if ($product instanceof Furniture) {
+            $this->addFurniture($product);
+        }
     }
 }

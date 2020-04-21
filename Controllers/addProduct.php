@@ -6,5 +6,6 @@ $type = $_POST['type'] ?? null;
 
 if ($type != null) {
     $productToAdd = new $type();
-    $productToAdd->addToDatabase();
+    $productToAdd->prepareInstanceToAddToDatabase();
+    Product::addProductToDatabase($productToAdd);
 }

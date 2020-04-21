@@ -103,27 +103,17 @@ class Furniture extends Product
         $this->price = $price;
     }
 
-    public static function getInstanceToAddToDatabase()
+    public function prepareInstanceToAddToDatabase()
     {
-        $furniture = new self();
-        $furniture->prepareBasicParamsToAddToDatabase();
-        $furniture->setHeight($_POST['height'] ?? null);
-        $furniture->setLength($_POST['length'] ?? null);
-        $furniture->setWidth($_POST['width'] ?? null);
-        return $furniture;
-    }
-
-    public function addToDatabase()
-    {
-        $this->connectToDatabase();
-        $furniture = Furniture::getInstanceToAddToDatabase();
-        $this->db_client->addFurniture($furniture);
-        $this->db_client->close();
+        $this->prepareBasicParamsToAddToDatabase();
+        $this->setHeight($_POST['height'] ?? null);
+        $this->setLength($_POST['length'] ?? null);
+        $this->setWidth($_POST['width'] ?? null);
     }
 
     public function echoAdditionalProperties($row)
     {
-        echo  "<p>Dimension: " . $row['height'] . "x" . $row['width'] . "x" . $row['length'] . " M</p>
+        echo "<p>Dimension: " . $row['height'] . "x" . $row['width'] . "x" . $row['length'] . " M</p>
                     </div>
                 </div>";
     }
